@@ -15,5 +15,8 @@ namespace QuicKing.Web.Data.Entities
         [Required(ErrorMessage = "The field {0} is mandatory.")]
         public string Plaque { get; set; }
 
+        public ICollection<TripEntity> Trips { get; set; }
+
     }
 }
+ 
