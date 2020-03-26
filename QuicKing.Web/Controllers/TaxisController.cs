@@ -44,6 +44,7 @@ namespace QuicKing.Web.Controllers
         }
 
         // GET: Taxis/Create
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
@@ -54,7 +55,7 @@ namespace QuicKing.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Plaque")] TaxiEntity taxiEntity)
+        public async Task<IActionResult> Create( TaxiEntity taxiEntity)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +87,7 @@ namespace QuicKing.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Plaque")] TaxiEntity taxiEntity)
+        public async Task<IActionResult> Edit(int id, TaxiEntity taxiEntity)
         {
             if (id != taxiEntity.Id)
             {
@@ -95,22 +96,10 @@ namespace QuicKing.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(taxiEntity);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TaxiEntityExists(taxiEntity.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                taxiEntity.Plaque = taxiEntity.Plaque.ToUpper();
+                _context.Update(taxiEntity);
+                await _context.SaveChangesAsync();
+               
                 return RedirectToAction(nameof(Index));
             }
             return View(taxiEntity);
@@ -145,9 +134,5 @@ namespace QuicKing.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TaxiEntityExists(int id)
-        {
-            return _context.Taxis.Any(e => e.Id == id);
-        }
     }
 }
