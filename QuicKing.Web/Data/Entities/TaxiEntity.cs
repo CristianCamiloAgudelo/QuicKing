@@ -17,6 +17,8 @@ namespace QuicKing.Web.Data.Entities
 
         public ICollection<TripEntity> Trips { get; set; }
 
+        public UserEntity User { get; set; }
+        
     }
 }
  
