@@ -55,15 +55,33 @@ namespace QuicKing.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create( TaxiEntity taxiEntity)
+        public async Task<IActionResult> Create(TaxiEntity model)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(taxiEntity);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                model.Plaque = model.Plaque.ToUpper();
+                _context.Add(model);
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception ex)
+                {
+                    if (ex.InnerException.Message.Contains("duplicate"))
+                    {
+                        ModelState.AddModelError(string.Empty, "Already there is a record with the same plaque.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, ex.InnerException.Message);
+                    }
+                }
             }
-            return View(taxiEntity);
+
+            return View(model);
+
         }
 
         // GET: Taxis/Edit/5
@@ -87,23 +105,39 @@ namespace QuicKing.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, TaxiEntity taxiEntity)
+        public async Task<IActionResult> Edit(int id, TaxiEntity model)
         {
-            if (id != taxiEntity.Id)
+            if (id != model.Id)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
-                taxiEntity.Plaque = taxiEntity.Plaque.ToUpper();
-                _context.Update(taxiEntity);
-                await _context.SaveChangesAsync();
-               
-                return RedirectToAction(nameof(Index));
+                model.Plaque = model.Plaque.ToUpper();
+                _context.Update(model);
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception ex)
+                {
+                    if (ex.InnerException.Message.Contains("duplicate"))
+                    {
+                        ModelState.AddModelError(string.Empty, "Already there is a record with the same plaque.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, ex.InnerException.Message);
+                    }
+                }
             }
-            return View(taxiEntity);
+
+            return View(model);
         }
+
 
         // GET: Taxis/Delete/5
         public async Task<IActionResult> Delete(int? id)
