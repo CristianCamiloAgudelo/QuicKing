@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace QuicKing.Common.Models
 {
@@ -19,5 +17,4 @@ namespace QuicKing.Common.Models
 
         public int NumberOfTrips => Trips == null ? 0 : Trips.Count(t => t.Qualification != 0);
     }
-
 }

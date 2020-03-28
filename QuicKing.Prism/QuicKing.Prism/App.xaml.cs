@@ -3,6 +3,7 @@ using Prism.Ioc;
 using QuicKing.Common.Services;
 using QuicKing.Prism.ViewModels;
 using QuicKing.Prism.Views;
+using Syncfusion.Licensing;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -22,6 +23,7 @@ namespace QuicKing.Prism
 
         protected override async void OnInitialized()
         {
+            SyncfusionLicenseProvider.RegisterLicense("MjI4OTk3QDMxMzcyZTM0MmUzMFVmM1d1ajhNOEdwMFRENEMvbXFkQUhxR0lwL2djVDlxT1UrZlhrWll6ZTQ9");
             InitializeComponent();
 
             await NavigationService.NavigateAsync("/TaxiMasterDetailPage/NavigationPage/HomePage");
@@ -30,6 +32,7 @@ namespace QuicKing.Prism
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.Register<IGeolocatorService, GeolocatorService>();
+            containerRegistry.Register<IApiService, ApiService>();
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<HomePage, HomePageViewModel>();
             containerRegistry.RegisterForNavigation<TaxiMasterDetailPage, TaxiMasterDetailPageViewModel>();

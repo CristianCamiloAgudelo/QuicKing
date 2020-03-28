@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using QuicKing.Web.Data;
 using QuicKing.Web.Data.Entities;
+using QuicKing.Web.Helpers;
 
 namespace QuicKing.Web.Controllers.API
 {
@@ -15,20 +16,15 @@ namespace QuicKing.Web.Controllers.API
     public class TaxisController : ControllerBase
     {
         private readonly DataContext _context;
+        private readonly IConverterHelper _converterHelper;
 
-        public TaxisController(DataContext context)
+        public TaxisController(DataContext context,
+            IConverterHelper converterHelper)
         {
             _context = context;
+            _converterHelper = converterHelper;
         }
-
-        // GET: api/Taxis
-        [HttpGet]
-        public IEnumerable<TaxiEntity> GetTaxis()
-        {
-            return _context.Taxis;
-        }
-
-        // GET: api/Taxis/5
+       // GET: api/Taxis/5
         [HttpGet("{plaque}")]
         public async Task<IActionResult> GetTaxiEntity([FromRoute] string plaque)
         {
@@ -39,36 +35,24 @@ namespace QuicKing.Web.Controllers.API
 
             plaque = plaque.ToUpper();
             TaxiEntity taxiEntity = await _context.Taxis
+                .Include(t => t.User)//conductor
+                .Include(t => t.Trips)//viajes
+                .ThenInclude(t => t.TripDetails)//detalles de viaje
                 .Include(t => t.Trips)
+                .ThenInclude(t => t.User)//pasajero
                 .FirstOrDefaultAsync(t => t.Plaque == plaque);
 
             if (taxiEntity == null)
             {
+                //return NotFound();
+                
                 _context.Taxis.Add(new TaxiEntity { Plaque = plaque });
                 await _context.SaveChangesAsync();
                 taxiEntity = await _context.Taxis.FirstOrDefaultAsync(t => t.Plaque == plaque);
+                
             }
 
-            return Ok(taxiEntity);
+            return Ok(_converterHelper.ToTaxiResponse(taxiEntity));
         }
-
-
-
-        // POST: api/Taxis
-        [HttpPost]
-        public async Task<IActionResult> PostTaxiEntity([FromBody] TaxiEntity taxiEntity)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            _context.Taxis.Add(taxiEntity);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetTaxiEntity", new { id = taxiEntity.Id }, taxiEntity);
-        }
-
-        
     }
 }
