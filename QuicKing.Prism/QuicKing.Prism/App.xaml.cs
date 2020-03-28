@@ -1,5 +1,6 @@
 ﻿using Prism;
 using Prism.Ioc;
+using QuicKing.Common.Services;
 using QuicKing.Prism.ViewModels;
 using QuicKing.Prism.Views;
 using Xamarin.Forms;
@@ -28,6 +29,7 @@ namespace QuicKing.Prism
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.Register<IGeolocatorService, GeolocatorService>();
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<HomePage, HomePageViewModel>();
             containerRegistry.RegisterForNavigation<TaxiMasterDetailPage, TaxiMasterDetailPageViewModel>();
