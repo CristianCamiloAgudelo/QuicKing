@@ -14,4 +14,8 @@
     <ProjectReference Include="..\QuicKing.Common\QuicKing.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\Users\" />
+  </ItemGroup>
+
 </Project>
