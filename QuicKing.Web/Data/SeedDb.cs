@@ -88,7 +88,7 @@ namespace QuicKing.Web.Data
                             Qualification = 4.5f,
                             Source = "Universidad de Caldas - Sede Central",
                             Target = "Universidad de Caldas - Sede Palogrande",
-                            Remarks = "Muy buen servicio",
+                            Remarks = "Proin elementum viverra eros, sed varius orci euismod vitae. Phasellus nec bibendum erat. In suscipit dignissim ullamcorper. Nam sem odio, tempus at ante non, scelerisque maximus lectus. Aenean ipsum sapien, maximus elementum elit sit amet, feugiat consequat ipsum. Pellentesque a enim vitae purus luctus sodales. Praesent semper ipsum vitae ipsum porta, nec porta nunc efficitur. Nulla vulputate massa et nunc efficitur ornare. Cras pellentesque elit eu congue viverra. Vivamus porta metus a molestie facilisis. Nam consequat et magna nec eleifend. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed arcu magna, scelerisque non lacinia quis, dictum ac libero. Ut iaculis ligula dui, eget porttitor nisi tincidunt ac.",
                             User = user1
                         },
                         new TripEntity
@@ -98,7 +98,7 @@ namespace QuicKing.Web.Data
                             Qualification = 4.8f,
                             Source = "Universidad de Caldas - Sede Palogrande",
                             Target = "Universidad de Caldas - Sede Central",
-                            Remarks = "Conductor muy amable",
+                            Remarks = "Pellentesque facilisis odio ut consequat dignissim. Nulla commodo ligula sit amet faucibus maximus. Fusce posuere ornare massa, a volutpat ex egestas ac. Pellentesque quis ornare ipsum. Mauris in mauris feugiat tortor semper volutpat in nec nibh. Nullam convallis pretium feugiat. Cras in interdum mauris. Maecenas magna mauris, dapibus eu posuere a, venenatis eget felis. Quisque consequat bibendum commodo. Nunc lobortis, velit dapibus laoreet ornare, turpis leo vestibulum urna, at porttitor ligula felis ac purus.",
                             User = user1
                         }
                     }
