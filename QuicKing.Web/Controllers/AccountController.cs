@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using QuicKing.Web.Data.Entities;
 using QuicKing.Web.Helpers;
 using QuicKing.Web.Models;
 using System;
@@ -114,6 +115,82 @@ namespace QuicKing.Web.Controllers
             }
 
             model.UserTypes = _combosHelper.GetComboRoles();
+            return View(model);
+        }
+
+        public async Task<IActionResult> ChangeUser()
+        {
+            //siempre me trae el nombre el correo del usuario logueado
+            UserEntity user = await _userHelper.GetUserAsync(User.Identity.Name);
+           
+            EditUserViewModel model = new EditUserViewModel
+            {
+                Address = user.Address,
+                Document = user.Document,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PhoneNumber = user.PhoneNumber,
+                PicturePath = user.PicturePath
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangeUser(EditUserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                string path = model.PicturePath;
+
+                if (model.PictureFile != null)
+                {
+                    path = await _imageHelper.UploadImageAsync(model.PictureFile, "Users");
+                }
+
+                UserEntity user = await _userHelper.GetUserAsync(User.Identity.Name);
+
+                user.Document = model.Document;
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.Address = model.Address;
+                user.PhoneNumber = model.PhoneNumber;
+                user.PicturePath = path;
+
+                await _userHelper.UpdateUserAsync(user);
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View(model);
+        }
+
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userHelper.GetUserAsync(User.Identity.Name);
+                if (user != null)
+                {
+                    var result = await _userHelper.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("ChangeUser");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, result.Errors.FirstOrDefault().Description);
+                    }
+                }
+                
+            }
+
             return View(model);
         }
 
