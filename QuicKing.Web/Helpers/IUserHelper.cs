@@ -11,7 +11,10 @@ namespace QuicKing.Web.Helpers
         Task<UserEntity> GetUserAsync(string email);
         
         Task<UserEntity> GetUserAsync(Guid userId);
-        
+
+        Task<SignInResult> ValidatePasswordAsync(UserEntity user, string password);
+
+
         Task<IdentityResult> AddUserAsync(UserEntity user, string password);
 
         Task CheckRoleAsync(string roleName);
