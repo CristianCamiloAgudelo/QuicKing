@@ -33,6 +33,10 @@ namespace QuicKing.Web.Helpers
 
         Task<IdentityResult> UpdateUserAsync(UserEntity user);
 
+        Task<string> GenerateEmailConfirmationTokenAsync(UserEntity user);
+
+        Task<IdentityResult> ConfirmEmailAsync(UserEntity user, string token);
+
 
     }
 }
