@@ -25,7 +25,7 @@ namespace QuicKing.Prism.ViewModels
         {
             _navigationService = navigationService;
             _apiService = apiService;
-            Title = "Taxi History";
+            Title = "Historial del Vehiculo";
         }
 
         public List<TripItemViewModel> Details
@@ -58,8 +58,8 @@ namespace QuicKing.Prism.ViewModels
             {
                 await App.Current.MainPage.DisplayAlert(
                     "Error",
-                    "You must enter a plaque.",
-                    "Accept");
+                    "Tu debes ingresar un placa.",
+                    "Aceptar");
                 return;
             }
 
@@ -68,8 +68,8 @@ namespace QuicKing.Prism.ViewModels
             {
                 await App.Current.MainPage.DisplayAlert(
                     "Error",
-                    "The plaque must start with three letters and end with three numbers.",
-                    "Accept");
+                    "La placa debe empezar por 3 letras y terminar en 3 numeros",
+                    "Aceptar");
                 return;
             }
 
@@ -79,7 +79,7 @@ namespace QuicKing.Prism.ViewModels
             if (!connection)
             {
                 IsRunning = false;
-                await App.Current.MainPage.DisplayAlert("Error", "Check the internet connection.", "Accept");
+                await App.Current.MainPage.DisplayAlert("Error", "Verifica tu conexión a internet", "Aceptar");
                 return;
             }
 
@@ -92,7 +92,7 @@ namespace QuicKing.Prism.ViewModels
                 await App.Current.MainPage.DisplayAlert(
                     "Error",
                     response.Message,
-                    "Accept");
+                    "Aceptar");
                 return;
             }
 

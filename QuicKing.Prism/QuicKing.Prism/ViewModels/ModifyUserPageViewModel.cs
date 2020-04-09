@@ -12,7 +12,7 @@ namespace QuicKing.Prism.ViewModels
     {
         public ModifyUserPageViewModel(INavigationService navigationService) : base(navigationService)
         {
-            Title = "Modify user";
+            Title = "Modificar Usuarios";
         }
     }
 }

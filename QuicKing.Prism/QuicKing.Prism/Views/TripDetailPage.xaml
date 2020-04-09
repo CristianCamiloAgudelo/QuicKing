@@ -22,7 +22,7 @@
                      Orientation="Horizontal">
             <Label FontAttributes="Bold" 
                    FontSize="Large"
-                   Text="Qualification"/>
+                   Text="Calificación"/>
             <Label FontAttributes="Bold" 
                    FontSize="Large"
                    Text="{Binding Trip.Qualification, StringFormat='{0:N2}'}"/>
@@ -39,7 +39,7 @@
             <Label Grid.Column="0" 
                    Grid.Row="0"
                    FontAttributes="Bold" 
-                   Text="StartDate"/>
+                   Text="Fecha"/>
             <Label Grid.Column="1" 
                    Grid.Row="0"
                    Text="{Binding Trip.StartDateLocal, StringFormat='{0:yyyy/MM/dd}'}"/>
@@ -47,7 +47,7 @@
                    Grid.Row="1"
                    LineBreakMode="CharacterWrap"
                    FontAttributes="Bold" 
-                   Text="Remarks"/>
+                   Text="Comentarios"/>
             <Label Grid.Column="1" 
                    Grid.Row="1"
                    Text="{Binding Trip.Remarks}"/>

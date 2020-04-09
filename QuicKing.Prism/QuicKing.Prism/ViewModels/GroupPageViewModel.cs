@@ -11,7 +11,7 @@ namespace QuicKing.Prism.ViewModels
     {
         public GroupPageViewModel(INavigationService navigationService) : base(navigationService)
         {
-            Title = "Admin my Family group";
+            Title = "Administrar Mi Grupo Familiar";
         }
     }
 }

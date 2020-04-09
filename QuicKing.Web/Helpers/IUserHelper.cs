@@ -8,6 +8,10 @@ namespace QuicKing.Web.Helpers
 {
     public interface IUserHelper
     {
+        Task<string> GeneratePasswordResetTokenAsync(UserEntity user);
+
+        Task<IdentityResult> ResetPasswordAsync(UserEntity user, string token, string password);
+
         Task<UserEntity> GetUserAsync(string email);
         
         Task<UserEntity> GetUserAsync(Guid userId);

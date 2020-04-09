@@ -15,7 +15,7 @@ namespace QuicKing.Prism.ViewModels
         public TripDetailPageViewModel(INavigationService navigationService) 
             : base(navigationService)
         {
-            Title = "Trip Detail";
+            Title = "Detalles del Viaje";
         }
 
         public TripResponse Trip

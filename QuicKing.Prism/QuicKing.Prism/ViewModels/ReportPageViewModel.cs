@@ -11,7 +11,7 @@ namespace QuicKing.Prism.ViewModels
     {
         public ReportPageViewModel(INavigationService navigationService) : base(navigationService)
         {
-            Title = "Report and incident";
+            Title = "Reportar un Incidente";
         }
     }
 }

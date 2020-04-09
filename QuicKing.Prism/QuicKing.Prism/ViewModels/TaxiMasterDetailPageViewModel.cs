@@ -29,31 +29,31 @@ namespace QuicKing.Prism.ViewModels
                 {
                     Icon = "ic_airport_shuttle",
                     PageName = "HomePage",
-                    Title = "New trip"
+                    Title = "Nuevo Viaje"
                 },
                 new Menu
                 {
                     Icon = "ic_local_taxi",
                     PageName = "TaxiHistoryPage",
-                    Title = "See taxi history"
+                    Title = "Mira el historial del vehiculo"
                 },
                 new Menu
                 {
                     Icon = "ic_nature_people",
                     PageName = "GroupPage",
-                    Title = "Admin my user group"
+                    Title = "Administrar mi grupo familiar"
                 },
                 new Menu
                 {
                     Icon = "ic_account_circle",
                     PageName = "ModifyUserPage",
-                    Title = "Modify User"
+                    Title = "Modificar Usuario"
                 },
                 new Menu
                 {
                     Icon = "ic_report",
                     PageName = "ReportPage",
-                    Title = "Report an incident"
+                    Title = "Reportar un incidente"
                 },
                 new Menu
                 {
