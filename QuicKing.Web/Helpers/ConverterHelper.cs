@@ -65,7 +65,7 @@ namespace QuicKing.Web.Helpers
         }
 
 
-        private UserResponse ToUserResponse(UserEntity user)
+        public UserResponse ToUserResponse(UserEntity user)
         {
             if (user == null)
             {
@@ -85,6 +85,9 @@ namespace QuicKing.Web.Helpers
                 UserType = user.UserType
             };
         }
+    
+        
+    
     }
 
 }

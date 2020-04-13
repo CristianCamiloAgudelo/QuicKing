@@ -22,17 +22,20 @@ namespace QuicKing.Web.Controllers.API
         private readonly IUserHelper _userHelper;
         private readonly IMailHelper _mailHelper;
         private readonly IImageHelper _imageHelper;
+        private readonly IConverterHelper _converterHelper;
 
         public AccountController(
             DataContext dataContext,
             IUserHelper userHelper,
             IMailHelper mailHelper,
-            IImageHelper imageHelper)
+            IImageHelper imageHelper,
+            IConverterHelper converterHelper)
         {
             _dataContext = dataContext;
             _userHelper = userHelper;
             _mailHelper = mailHelper;
             _imageHelper = imageHelper;
+            _converterHelper = converterHelper;
         }
 
         [HttpPost]
@@ -225,6 +228,26 @@ namespace QuicKing.Web.Controllers.API
                 IsSuccess = true,
                 Message = "Cambio de contraseña exitoso."
             });
+        }
+
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPost]
+        [Route("GetUserByEmail")]
+        public async Task<IActionResult> GetUserByEmail([FromBody] EmailRequest emailRequest)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            UserEntity userEntity = await _userHelper.GetUserAsync(emailRequest.Email);
+            if (userEntity == null)
+            {
+                return NotFound("Usuario no existe.");
+            }
+
+            return Ok(_converterHelper.ToUserResponse(userEntity));
         }
 
 
