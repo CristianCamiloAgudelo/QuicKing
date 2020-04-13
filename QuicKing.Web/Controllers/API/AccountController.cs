@@ -102,6 +102,48 @@ namespace QuicKing.Web.Controllers.API
                 Message = "La confirmación ha sido enviada a tu correo electronico."
             });
         }
+
+
+        [HttpPost]
+        [Route("RecoverPassword")]
+        public async Task<IActionResult> RecoverPassword([FromBody] EmailRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new Response
+                {
+                    IsSuccess = false,
+                    Message = "Bad request",
+                    Result = ModelState
+                });
+            }
+
+            CultureInfo cultureInfo = new CultureInfo(request.CultureInfo);
+
+            UserEntity user = await _userHelper.GetUserAsync(request.Email);
+            if (user == null)
+            {
+                return BadRequest(new Response
+                {
+                    IsSuccess = false,
+                    Message = "Usuario no existe"
+                });
+            }
+
+            string myToken = await _userHelper.GeneratePasswordResetTokenAsync(user);
+            string link = Url.Action("ResetPassword", "Account", new { token = myToken }, protocol: HttpContext.Request.Scheme);
+            _mailHelper.SendMail(request.Email, "Recuperar Contraseña", $"<h1>{"Recordar Contraseña"}</h1>" +
+                $"{"Para recuperar la contraseña, haga clic en el siguiente enlace: "}</br></br><a href = \"{link}\">{"Recuperar Contraseña"}</a>");
+
+            return Ok(new Response
+            {
+                IsSuccess = true,
+                Message = "Recordatorio de contraseña enviada al correo electronico"
+            });
+        }
+
+
+
     }
 
 }
