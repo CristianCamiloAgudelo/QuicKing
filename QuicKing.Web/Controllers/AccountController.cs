@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using QuicKing.Common.Models;
 using QuicKing.Web.Data.Entities;
 using QuicKing.Web.Helpers;
 using QuicKing.Web.Models;
@@ -37,13 +39,38 @@ namespace QuicKing.Web.Controllers
 
         }
 
-        public IActionResult RecoverPassword()
+        public IActionResult ChangePasswordMVC()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> RecoverPassword(RecoverPasswordViewModel model)
+        public async Task<IActionResult> ChangePasswordMVC(ChangePasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userHelper.GetUserAsync(User.Identity.Name);
+                var result = await _userHelper.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ChangeUser");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, result.Errors.FirstOrDefault().Description);
+                }
+            }
+
+            return View(model);
+        }
+
+        public IActionResult RecoverPasswordMVC()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RecoverPasswordMVC(RecoverPasswordViewModel model)
         {
             if (ModelState.IsValid)
             {

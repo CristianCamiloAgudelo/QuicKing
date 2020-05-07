@@ -202,14 +202,16 @@ namespace QuicKing.Web.Controllers.API
                     Result = ModelState
                 });
             }
-            
+
+            CultureInfo cultureInfo = new CultureInfo(request.CultureInfo);
+
             UserEntity user = await _userHelper.GetUserAsync(request.Email);
             if (user == null)
             {
                 return BadRequest(new Response
                 {
                     IsSuccess = false,
-                    Message = "Usuario no existe."
+                    Message = "User Not Found Error"
                 });
             }
 
@@ -226,7 +228,7 @@ namespace QuicKing.Web.Controllers.API
             return Ok(new Response
             {
                 IsSuccess = true,
-                Message = "Cambio de contraseña exitoso."
+                Message = "Cambio de Password Satisfactorio"
             });
         }
 
