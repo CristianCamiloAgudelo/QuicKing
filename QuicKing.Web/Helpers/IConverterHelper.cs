@@ -13,6 +13,9 @@ namespace QuicKing.Web.Helpers
         TripResponse ToTripResponse(TripEntity tripEntity);
 
         UserResponse ToUserResponse(UserEntity user);
+
+        List<UserGroupDetailResponse> ToUserGroupResponse(List<UserGroupDetailEntity> users);
+
     }
 
 }
